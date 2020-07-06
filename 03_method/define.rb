@@ -47,19 +47,12 @@ module OriginalAccessor
         define_method "#{attr}=" do |value|
           @attr=(value)
           if value == true || value == false
-            self.extend BooleanAccessor
-            bool "#{attr}"
+            define_singleton_method "#{attr}?" do
+              @attr ? true : false
+            end
           end
         end
       }
-    end
-  end
-
-  module BooleanAccessor
-    define_method :bool do |attr|
-      define_singleton_method "#{attr}?" do
-        @attr ? true : false
-      end
     end
   end
 end
